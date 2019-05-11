@@ -1,6 +1,4 @@
 %% Info
-% 概要：医用画像工学 課題1
-% 用途：画像のフィルタリングなどについて
 % @created 2019/5/11 [Masumi Morishige]
 
 %% Reset
@@ -24,12 +22,12 @@ figure(2);
 imshow(appleIMG_mono);
 
 %% Affine Translation
-% 諡｡螟ｧ
+% Zoom
 zoom_array = [2 0 0;0 2 0; 0 0 1];
 zoom_tform = affine2d(zoom_array);
 appleIMG_zoom = imwarp(appleIMG, zoom_tform);
 
-% 蟷ｳ陦檎ｧｻ蜍?
+% Translation
 translate_distance = [3000 3000];
 translate_array = [1 0 0;0 1 0; translate_distance(1) translate_distance(2) 1];
 % translate_array = [1 0 translate_distance(1);0 1 translate_distance(2); 0 0 1];
@@ -37,13 +35,13 @@ translate_tform = affine2d(translate_array);
 % appleIMG_translate = imtransform(appleIMG, translate_tform, 'XData', [1, IMG_size(1)], 'YData', [1, IMG_size(2)], 'XYScale', 1);
 appleIMG_translate = imwarp(appleIMG, translate_tform);
 
-% 蝗櫁ｻ｢
+% Rotation
 theta = pi/6;
 rotate_array = [cos(theta) -sin(theta) 0;sin(theta) cos(theta) 0; 0 0 1];
 rotate_tform = affine2d(rotate_array);
 appleIMG_rotate = imwarp(appleIMG, rotate_tform);
 
-% 縺帙ｓ譁ｭ
+% Shear
 theta2 = pi/6;
 shear_array = [1 0 0;tan(theta2) 1 0; 0 0 1];
 shear_tform = affine2d(shear_array);
@@ -61,7 +59,4 @@ imshow(appleIMG_rotate);
 figure(6);
 imshow(appleIMG_shear);
 
-%% 
-
-
-%% End
+%% End of the Script
