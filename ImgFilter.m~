@@ -9,14 +9,14 @@ clc;
 %% Original
 appleIMG = imread('apple.jpeg');
 IMG_size = size(appleIMG);
-[filepath,name,ext] = fileparts('apple.jpeg');
+[filepath,name,ext] = fileparts(apple.jpeg);
 
 fprintf('>> Info\n');
 fprintf('Size: [%d, %d]\n', IMG_size(1,1), IMG_size(1,2));
 fprintf('Number of Pixels: %d px\n', IMG_size(1,1)*IMG_size(1,2));
 fprintf('Resolution: %d ppi\n', 72);
 fprintf('Number of Gradations: %d (%d bit) \n', 2^8, 8);
-fprintf('File Extension: %s \n', ext);
+fprintf('File Extension: %s \n', 'jpeg');
 
 figure('Name', 'Original', 'NumberTitle', 'off');
 imshow(appleIMG);
