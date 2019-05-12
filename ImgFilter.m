@@ -52,10 +52,9 @@ imshow(appleIMG_zoom);
 % Translation
 translate_distance = [3000 3000];
 translate_array = [1 0 0;0 1 0; translate_distance(1) translate_distance(2) 1];
-% translate_array = [1 0 translate_distance(1);0 1 translate_distance(2); 0 0 1];
 translate_tform = affine2d(translate_array);
 % appleIMG_translate = imtransform(appleIMG, translate_tform, 'XData', [1, IMG_size(1)], 'YData', [1, IMG_size(2)], 'XYScale', 1);
-appleIMG_translate = imwarp(appleIMG, translate_tform);
+appleIMG_translate = imwarp(appleIMG, translate_tform, 'XData', [1, IMG_size(1)], 'YData', [1, IMG_size(2)], 'XYScale', 1);
 figure('Name', 'Translate', 'NumberTitle', 'off');
 imshow(appleIMG_translate);
 
@@ -74,5 +73,10 @@ shear_tform = affine2d(shear_array);
 appleIMG_shear = imwarp(appleIMG, shear_tform);
 figure('Name', 'Shear', 'NumberTitle', 'off');
 imshow(appleIMG_shear);
+
+%% Noise (salt and pepper)
+appleIMG_noise = imnoise(appleIMG, 'salt & pepper');
+figure('Name', 'Noise', 'NumberTitle', 'off');
+imshow(appleIMG_noise);
 
 %% End of the Script
