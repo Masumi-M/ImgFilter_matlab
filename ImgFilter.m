@@ -34,12 +34,29 @@ figure('Name', 'Blue', 'NumberTitle', 'off');
 imshow(appleIMG_blue);
 
 %% GrayScale
-weight = [0.299 0.587 0.114];
-appleIMG_gray_pin = (weight(1)*appleIMG(:,:,1) + weight(2)*appleIMG(:,:,2) + weight(3)*appleIMG(:,:,3));
-appleIMG_gray = repmat(appleIMG_gray_pin,[1 1 3]);
+% 1st type
+appleIMG_gray_pin_1 = (appleIMG(:,:,1) + appleIMG(:,:,2) + appleIMG(:,:,3))./3;
+appleIMG_gray_1 = repmat(appleIMG_gray_pin_1,[1 1 3]);
+figure('Name', 'GrayScale1', 'NumberTitle', 'off');
+imshow(appleIMG_gray_1);
 
-figure('Name', 'GrayScale', 'NumberTitle', 'off');
-imshow(appleIMG_gray);
+% 2nd type
+weight = [0.299 0.587 0.114];
+appleIMG_gray_pin_2 = (weight(1)*appleIMG(:,:,1) + weight(2)*appleIMG(:,:,2) + weight(3)*appleIMG(:,:,3));
+appleIMG_gray_2 = repmat(appleIMG_gray_pin_2,[1 1 3]);
+figure('Name', 'GrayScale2', 'NumberTitle', 'off');
+imshow(appleIMG_gray_2);
+
+% 3rd type
+appleIMG_gray_pin_3 = max(appleIMG,[],[(IMG_size(1,1)*IMG_size(1,2)) 3]);
+appleIMG_gray_3 = repmat(appleIMG_gray_pin_3,[1 1 3]);
+figure('Name', 'GrayScale3', 'NumberTitle', 'off');
+imshow(appleIMG_gray_3);
+
+% 4th type
+appleIMG_gray_4 = rgb2gray(appleIMG);
+figure('Name', 'GrayScale4', 'NumberTitle', 'off');
+imshow(appleIMG_gray_4);
 
 %% Affine Translation
 % Zoom
@@ -75,8 +92,33 @@ figure('Name', 'Shear', 'NumberTitle', 'off');
 imshow(appleIMG_shear);
 
 %% Noise (salt and pepper)
+% With Noise(color)
 appleIMG_noise = imnoise(appleIMG, 'salt & pepper');
 figure('Name', 'Noise', 'NumberTitle', 'off');
 imshow(appleIMG_noise);
+
+% With Noise(grayscale)
+appleIMG_noise_gray = rgb2gray(appleIMG_noise);
+figure('Name', 'Noise(gray)', 'NumberTitle', 'off');
+imshow(appleIMG_noise_gray);
+
+%% Moving Average Filter
+movingArray = [1 1 1;1 1 1;1 1 1]/9;
+appleIMG_noise_moving = filter2(movingArray, appleIMG_noise_gray);
+appleIMG_noise_moving_mean = uint8(appleIMG_noise_moving);
+figure('Name', 'Moving Filter', 'NumberTitle', 'off');
+imshow(appleIMG_noise_moving_mean);
+
+%% Weighted Average Filter
+weightedArray = [1 2 1;2 4 2;1 2 1]/16;
+appleIMG_noise_weighted = filter2(weightedArray, appleIMG_noise_gray);
+appleIMG_noise_weighted_mean = uint8(appleIMG_noise_weighted);
+figure('Name', 'Weighted Filter', 'NumberTitle', 'off');
+imshow(appleIMG_noise_weighted_mean);
+
+%% Median Filter
+appleIMG_noise_median = medfilt2(appleIMG_noise_gray);
+figure('Name', 'Median Filter', 'NumberTitle', 'off');
+imshow(appleIMG_noise_median);
 
 %% End of the Script
