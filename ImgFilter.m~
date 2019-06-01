@@ -145,25 +145,13 @@ saveas(gcf, strcat(save_dir_name, 'median_filter.jpg'));
 %% Differential Image
 % Sobel Operator
 sobelArray = [-1 0 1; -2 0 2; -1 0 1];
-appleIMG_sobel = uint8(filter2(sobelArray, appleIMG_gray_4));
-figure('Name', 'Sobel Filter', 'NumberTitle', 'off');
-imshow(appleIMG_sobel);
-saveas(gcf, strcat(save_dir_name, 'sobel_filter.jpg'));
+appleIMG_sobel = uint8(filter2(sobelArray, ));
 
 % Prewitt Operator
-prewittArray = [-1 0 1; -1 0 1; -1 0 1];
-appleIMG_prewitt = uint8(filter2(prewittArray, appleIMG_gray_4));
-figure('Name', 'Prewitt Filter', 'NumberTitle', 'off');
-imshow(appleIMG_prewitt);
-saveas(gcf, strcat(save_dir_name, 'prewitt_filter.jpg'));
+
 
 % Laplacian Operator
-laplacianAlpha = 
-laplacianArray = [0 -1 0; -1 5 -1; 0 -1 0];
-appleIMG_laplacian = uint8(filter2(laplacianArray, appleIMG_gray_4));
-figure('Name', 'Laplacian Filter', 'NumberTitle', 'off');
-imshow(appleIMG_laplacian);
-saveas(gcf, strcat(save_dir_name, 'laplacian_filter.jpg'));
+
 
 %% Sharpening Filter
 
