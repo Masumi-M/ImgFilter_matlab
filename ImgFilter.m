@@ -170,18 +170,103 @@ appleIMG_moving = filter2(movingArray, appleIMG_gray_4);
 appleIMG_moving_mean = uint8(appleIMG_moving);
 figure('Name', 'Sharpening Filter [Before]', 'NumberTitle', 'off');
 imshow(appleIMG_moving_mean);
+saveas(gcf, strcat(save_dir_name, 'sharpening_filter_before.jpg'));
 
 sharpeningArray = [-1 -1 -1; -1 9 -1; -1 -1 -1];
 appleIMG_sharpening = uint8(filter2(sharpeningArray, appleIMG_moving_mean));
 figure('Name', 'Sharpening Filter [After]', 'NumberTitle', 'off');
 imshow(appleIMG_sharpening);
-saveas(gcf, strcat(save_dir_name, 'sharpening_filter.jpg'));
+saveas(gcf, strcat(save_dir_name, 'sharpening_filter_after.jpg'));
 
 %% Fourier Transform
 % Fast Fourier Transform[FFT]
+zoom_out_array = [0.8 0 0;0 0.8 0; 0 0 1];
+zoom_out_tform = affine2d(zoom_out_array);
+appleIMG_zoom_out = imwarp(appleIMG_gray_4, zoom_out_tform);
+appleIMG_fft_before = appleIMG_zoom_out(1:256,101:356,1);
+figure('Name', 'FFT [before]', 'NumberTitle', 'off');
+imshow(appleIMG_fft_before);
+saveas(gcf, strcat(save_dir_name, 'fft_before.jpg'));
 
-% 2D-Ideal Filter
+appleIMG_fft_after = abs(fft2(appleIMG_fft_before));
+appleIMG_fft_after = uint8(appleIMG_fft_after/max(appleIMG_fft_after(:)).^0.35);
+figure('Name', 'FFT [after]', 'NumberTitle', 'off');
+imshow(appleIMG_fft_after);
+saveas(gcf, strcat(save_dir_name, 'fft_after.jpg'));
+
+% Filtering in frequency-area
+appleIMG_fft_shift = fftshift(fft2(appleIMG_fft_before));
+appleIMG_fft_shift = repmat(appleIMG_fft_shift, [1 1 3]);
+% appleIMG_fft_shift_rep = ;
+filter_parameter = [5 10 50];
+[image_height, image_width] = size(appleIMG_fft_shift(:,:,1));
+for i_para = 1:3
+    for i_width = 1:image_width
+        for i_height = 1:image_height
+            r = sqrt((i_width - (image_height/2 + 1))^2 + (i_height - (image_width/2 - 1))^2);
+            if r > filter_parameter(i_para)
+                appleIMG_fft_shift(i_height, i_width, i_para) = 0;
+            end
+        end
+    end
+end
+
+appleIMG_fft_filtering_R5 = ifft2(ifftshift(appleIMG_fft_shift(:,:,1)));
+appleIMG_fft_filtering_R5 = uint8(abs(appleIMG_fft_filtering_R5));
+figure('Name', 'FFT filtering [R=5]', 'NumberTitle', 'off');
+imshow(appleIMG_fft_filtering_R5);
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R5.jpg'));
+
+appleIMG_fft_filtering_R10 = ifft2(ifftshift(appleIMG_fft_shift(:,:,2)));
+appleIMG_fft_filtering_R10 = uint8(abs(appleIMG_fft_filtering_R10));
+figure('Name', 'FFT filtering [R=10]', 'NumberTitle', 'off');
+imshow(appleIMG_fft_filtering_R10);
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R10.jpg'));
+
+appleIMG_fft_filtering_R50 = ifft2(ifftshift(appleIMG_fft_shift(:,:,3)));
+appleIMG_fft_filtering_R50 = uint8(abs(appleIMG_fft_filtering_R50));
+figure('Name', 'FFT filtering [R=50]', 'NumberTitle', 'off');
+imshow(appleIMG_fft_filtering_R50);
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R50.jpg'));
 
 % Inverse Fourier Transform
+% R = 5
+appleIMG_fft_filtering_R5_fft = fft2(appleIMG_fft_filtering_R5);
+appleIMG_fft_filtering_R5_fft_shift = fftshift(appleIMG_fft_filtering_R5_fft);
+appleIMG_fft_filtering_R5_fft_abs_shift = fftshift(abs(appleIMG_fft_filtering_R5_fft));
+figure('Name', 'FFT filtering (fftshift) [R=5]', 'NumberTitle', 'off');
+imshow(uint8(appleIMG_fft_filtering_R5_fft_abs_shift/max(appleIMG_fft_filtering_R5_fft_abs_shift(:)).^0.35));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R5_fftshift.jpg'));
+
+appleIMG_fft_filtering_R5_ifft = ifft2(fftshift(appleIMG_fft_filtering_R5_fft_shift));
+figure('Name', 'FFT filtering (ifft) [R=5]', 'NumberTitle', 'off');
+imshow(uint8(abs(appleIMG_fft_filtering_R5_ifft)));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R5_ifft.jpg'));
+
+% R = 10
+appleIMG_fft_filtering_R10_fft = fft2(appleIMG_fft_filtering_R10);
+appleIMG_fft_filtering_R10_fft_shift = fftshift(appleIMG_fft_filtering_R10_fft);
+appleIMG_fft_filtering_R10_fft_abs_shift = fftshift(abs(appleIMG_fft_filtering_R10_fft));
+figure('Name', 'FFT filtering (fftshift) [R=10]', 'NumberTitle', 'off');
+imshow(uint8(appleIMG_fft_filtering_R10_fft_abs_shift/max(appleIMG_fft_filtering_R10_fft_abs_shift(:)).^0.35));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R10_fftshift.jpg'));
+
+appleIMG_fft_filtering_R10_ifft = ifft2(fftshift(appleIMG_fft_filtering_R10_fft_shift));
+figure('Name', 'FFT filtering (ifft) [R=10]', 'NumberTitle', 'off');
+imshow(uint8(abs(appleIMG_fft_filtering_R10_ifft)));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R10_ifft.jpg'));
+
+% R = 50
+appleIMG_fft_filtering_R50_fft = fft2(appleIMG_fft_filtering_R50);
+appleIMG_fft_filtering_R50_fft_shift = fftshift(appleIMG_fft_filtering_R50_fft);
+appleIMG_fft_filtering_R50_fft_abs_shift = fftshift(abs(appleIMG_fft_filtering_R50_fft));
+figure('Name', 'FFT filtering (fftshift) [R=50]', 'NumberTitle', 'off');
+imshow(uint8(appleIMG_fft_filtering_R50_fft_abs_shift/max(appleIMG_fft_filtering_R50_fft_abs_shift(:)).^0.35));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R50_fftshift.jpg'));
+
+appleIMG_fft_filtering_R50_ifft = ifft2(fftshift(appleIMG_fft_filtering_R50_fft_shift));
+figure('Name', 'FFT filtering (ifft) [R=50]', 'NumberTitle', 'off');
+imshow(uint8(abs(appleIMG_fft_filtering_R50_ifft)));
+saveas(gcf, strcat(save_dir_name, 'fft_filtering_R50_ifft.jpg'));
 
 %% End of the Script
