@@ -158,18 +158,30 @@ imshow(appleIMG_prewitt);
 saveas(gcf, strcat(save_dir_name, 'prewitt_filter.jpg'));
 
 % Laplacian Operator
-laplacianAlpha = 
-laplacianArray = [0 -1 0; -1 5 -1; 0 -1 0];
+laplacianArray = [1 1 1; 1 -8 1; 1 1 1];
 appleIMG_laplacian = uint8(filter2(laplacianArray, appleIMG_gray_4));
 figure('Name', 'Laplacian Filter', 'NumberTitle', 'off');
 imshow(appleIMG_laplacian);
 saveas(gcf, strcat(save_dir_name, 'laplacian_filter.jpg'));
 
 %% Sharpening Filter
+movingArray = [1 1 1;1 1 1;1 1 1]/9;
+appleIMG_moving = filter2(movingArray, appleIMG_gray_4);
+appleIMG_moving_mean = uint8(appleIMG_moving);
+figure('Name', 'Sharpening Filter [Before]', 'NumberTitle', 'off');
+imshow(appleIMG_moving_mean);
 
-
+sharpeningArray = [-1 -1 -1; -1 9 -1; -1 -1 -1];
+appleIMG_sharpening = uint8(filter2(sharpeningArray, appleIMG_moving_mean));
+figure('Name', 'Sharpening Filter [After]', 'NumberTitle', 'off');
+imshow(appleIMG_sharpening);
+saveas(gcf, strcat(save_dir_name, 'sharpening_filter.jpg'));
 
 %% Fourier Transform
+% Fast Fourier Transform[FFT]
 
+% 2D-Ideal Filter
+
+% Inverse Fourier Transform
 
 %% End of the Script
