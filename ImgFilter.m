@@ -144,18 +144,31 @@ saveas(gcf, strcat(save_dir_name, 'median_filter.jpg'));
 
 %% Differential Image
 % Sobel Operator
-sobelArray = [-1 0 1; -2 0 2; -1 0 1];
-appleIMG_sobel = uint8(filter2(sobelArray, appleIMG_gray_4));
-figure('Name', 'Sobel Filter', 'NumberTitle', 'off');
-imshow(appleIMG_sobel);
-saveas(gcf, strcat(save_dir_name, 'sobel_filter.jpg'));
+sobelArrayX = [-1 0 1; -2 0 2; -1 0 1];
+appleIMG_sobelX = uint8(filter2(sobelArrayX, appleIMG_gray_4));
+figure('Name', 'Sobel Filter [x]', 'NumberTitle', 'off');
+imshow(appleIMG_sobelX);
+saveas(gcf, strcat(save_dir_name, 'sobel_filter_x.jpg'));
+
+sobelArrayY = [-1 -2 -1; 0 0 0; 1 2 1];
+appleIMG_sobelY = uint8(filter2(sobelArrayY, appleIMG_gray_4));
+figure('Name', 'Sobel Filter [y]', 'NumberTitle', 'off');
+imshow(appleIMG_sobelY);
+saveas(gcf, strcat(save_dir_name, 'sobel_filter_y.jpg'));
 
 % Prewitt Operator
-prewittArray = [-1 0 1; -1 0 1; -1 0 1];
-appleIMG_prewitt = uint8(filter2(prewittArray, appleIMG_gray_4));
-figure('Name', 'Prewitt Filter', 'NumberTitle', 'off');
-imshow(appleIMG_prewitt);
-saveas(gcf, strcat(save_dir_name, 'prewitt_filter.jpg'));
+prewittArrayX = [-1 0 1; -1 0 1; -1 0 1];
+appleIMG_prewittX = uint8(filter2(prewittArrayX, appleIMG_gray_4));
+figure('Name', 'Prewitt Filter [x]', 'NumberTitle', 'off');
+imshow(appleIMG_prewittX);
+saveas(gcf, strcat(save_dir_name, 'prewitt_filter_x.jpg'));
+
+prewittArrayY = [-1 -1 -1; 0 0 0; 1 1 1];
+appleIMG_prewittY = uint8(filter2(prewittArrayY, appleIMG_gray_4));
+figure('Name', 'Prewitt Filter [y]', 'NumberTitle', 'off');
+imshow(appleIMG_prewittY);
+saveas(gcf, strcat(save_dir_name, 'prewitt_filter_y.jpg'));
+
 
 % Laplacian Operator
 laplacianArray = [1 1 1; 1 -8 1; 1 1 1];
@@ -270,3 +283,4 @@ imshow(uint8(abs(appleIMG_fft_filtering_R50_ifft)));
 saveas(gcf, strcat(save_dir_name, 'fft_filtering_R50_ifft.jpg'));
 
 %% End of the Script
+fprintf('--- End of the Script ---');
