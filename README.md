@@ -5,25 +5,25 @@ This is a project about `Image Filtering` using matlab.
 
 
 
-### Original
+## Original
 
 ![apple](./apple.jpeg)
 
  
 
-### Red
+## Red
 
 ![red](./OutputImage/red.jpg)
 
-### Green
+## Green
 
 ![green](./OutputImage/green.jpg)
 
-### Blue
+## Blue
 
 ![blue](./OutputImage/blue.jpg)
 
-### Grayscale
+## Grayscale
 
 ![gs1](./OutputImage/grayscale1.jpg)
 
@@ -33,37 +33,68 @@ This is a project about `Image Filtering` using matlab.
 
 ![gs4](./OutputImage/grayscale4.jpg)
 
-### Zoom
+## Zoom
 
 ![zoom](./OutputImage/zoom.jpg)
 
-### Rotation
+## Rotation
 
 ![rotation](./OutputImage/rotation.jpg)
 
-### Shear
+## Shear
 
 ![shear](./OutputImage/shear.jpg)
 
-### Original + Noise
+## Original + Noise
 
 ![noise](./OutputImage/noise.jpg)
 
 ![noise_gray](./OutputImage/noise_gray.jpg)
 
-### Filters
+## Filters
 
-#### Moving Filter
+### Moving Filter
 
 ![moving_filter](./OutputImage/moving_filter.jpg)
 
-#### Median Filter
+### Median Filter
 
 ![median_filter](./OutputImage/median_filter.jpg)
 
-#### Weighted Filter
+### Weighted Filter
 
 ![weighted_filter](./OutputImage/weighted_filter.jpg)
 
+### Sharpening Filter
 
+![sharpening_filter_after](./OutputImage/sharpening_filter_after.jpg)
 
+### Sobel Filter (x / y)
+
+![sobel_filter_x](./OutputImage/sobel_filter_x.jpg)
+
+![sobel_filter_y](./OutputImage/sobel_filter_y.jpg)
+
+### Prewitt Filter (x / y)
+
+![prewitt_filter_x](./OutputImage/prewitt_filter_x.jpg)
+
+![prewitt_filter_y](./OutputImage/prewitt_filter_y.jpg)
+
+### Laplacian Filter
+
+![laplacian_filter](./OutputImage/laplacian_filter.jpg)
+
+## FFT Filtering
+
+### R5
+
+![fft_filtering_R5](./OutputImage/fft_filtering_R5.jpg)
+
+### R10
+
+![fft_filtering_R10](./OutputImage/fft_filtering_R10.jpg)
+
+### R50
+
+![fft_filtering_R50](./OutputImage/fft_filtering_R50.jpg)
